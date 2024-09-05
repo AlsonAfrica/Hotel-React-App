@@ -1,0 +1,142 @@
+
+/* Hero Styling */
+.hero-section{
+    background-color: rgb(255, 255, 255);
+    height:700px;
+    
+}
+
+.hero-text{
+    padding-top: 70px;
+    text-align: center;
+    
+}
+.hero-text h1{
+   font-size: 200;
+   color: white;
+}
+
+.hero-text p{
+    color:white;
+}
+/* .control-panel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    height:100px;
+    margin-left: 500px;
+    width:50%;
+    background-color:grey;
+    border-radius: 25px;
+    gap:10px;
+} */
+.search-bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+/* End of Hero Styling */
+
+
+
+
+.room-container{
+    margin-top: 50px;
+    height:600px;
+    width:100%;
+    /* background-color: aqua; */
+}
+.room-cards{
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+}
+
+.text-navigation{
+    display: flex; 
+    justify-content:center; 
+    gap:1500px;
+    font-family: sans-serif;
+}
+.navigation-buttons button{
+    padding: 15px;
+}
+
+
+/* .navigation-buttons{
+    background-color: aquamarine;
+} */
+
+
+
+
+/* Card container styling on the landing Page*/
+
+.card-containers{
+    /* background-color: grey; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap:10px;
+    height:400px;
+    margin-top: 20px;
+    padding: 20px 20px 20px 50px;
+
+    /* margin-left: 20px; */
+}
+
+/* reviews */
+
+.Reviews{
+    /* display: flex; */
+    /* flex-direction: row; */
+    height:300px;
+    background-color: cadetblue;
+
+}
+
+.reviews-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.review-card{
+    display: flex;
+}
+
+.About{
+    /* background-color: black; */
+    margin-top: 100px;
+    height:400px;
+    display: flex;
+}
+.picture{
+    width:50%;
+    background-color: azure;
+}
+.About-text{
+    width:50%;
+    /* background-color: aqua; */
+    height: 100%;
+}
+.About-text h1{
+    text-align: center;
+    font-family: sans-serif;
+}
+.hotel-about{
+    text-align: center;
+    padding-top: 40px;
+    font-size: 1.2em;
+    
+}
+.hotel-location{
+    padding-top: 40px;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+}

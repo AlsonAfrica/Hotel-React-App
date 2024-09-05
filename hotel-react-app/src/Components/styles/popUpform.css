@@ -1,0 +1,73 @@
+/* src/Components/styles/popup.css */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(107, 99, 99, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures it is on top of every other element */
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0);
+  z-index: 10000; /* Ensures the content is above the overlay */
+  width: 95%;
+  height: 90%;
+}
+
+.image-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 4px;
+  width: 35%; /* Full width of the grid cell */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Optional: for rounded corners */
+  object-fit: cover; /* /* Adjust the space between images */
+}
+
+.grid-image {
+  width: 100%; /* Full width of the grid cell */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Optional: for rounded corners */
+  object-fit: cover; /* Ensure the image covers the grid cell */
+}
+.dates{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+.popup-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.popup-amenity {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.popup-amenity span {
+  margin-left: 5px;
+}
+/*  */
+/* Add to your popUpform.css */
+.close-button-container {
+position: absolute;
+top: 10px;
+right: 10px;
+}
+
+
+  
+
+   

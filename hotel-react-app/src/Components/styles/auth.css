@@ -1,0 +1,83 @@
+
+/* Registration Page Styling */
+.wrapper-signup{
+    display: flex;
+    height:100vh;
+    background-color: burlywood;
+}
+.signup-pic{
+  /* height: 100%; */
+  background-color: cornflowerblue;
+  width:40%;
+}
+.signup-form{
+    /* height: 100%; */
+    background-color: rgb(207, 28, 192);
+    width:60%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* gap:20px; */
+
+    
+}
+.logo{
+    height:200px;
+    width:200px;
+    background-color: azure;
+    border-radius: 50%;
+    margin-top: 10px;
+
+   
+}
+.Form{
+    /* margin-bottom: 70px; */
+    /* border-radius: %; */
+    text-align: center;
+}
+/* Login Page styling */
+
+.login-wrapper{
+    height:100vh;
+    background-color: deeppink;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-pic{
+    width:60%;
+    height: 100%;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.login-form{
+    width:40%;
+    height: 100%;
+    background-color: rgb(32, 8, 172);
+}
+.icons{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    gap:50px;
+    align-items: center;
+    justify-content: center;
+}
+.login-form > *{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* .btn-btn{
+
+} */
+
+.back-btn button{
+    width:100px;
+    height: 40px;
+    border-radius: 10px;
+}
