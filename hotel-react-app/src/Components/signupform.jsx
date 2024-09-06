@@ -5,9 +5,10 @@ import { Box, Button, TextField, Typography, Grid, Link, Avatar, IconButton, Che
 import { Google as GoogleIcon } from '@mui/icons-material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { signUpUser } from '../Redux/authenticationSlice';
-// import {doc,setDoc} from 'firebase/firestore'
-// import {auth, db} from '../Config/firebaseConfig'
+import { collection, addDoc } from 'firebase/firestore';
+import { auth, db } from '../Config/firebaseConfig'; // Import Firestore
 
+// Initializing the form fields
 export default function SignInForm() {
   const [formValues, setFormValues] = React.useState({
     name: '',
@@ -24,6 +25,7 @@ export default function SignInForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // the function handles changes in input fields. 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormValues({
@@ -31,12 +33,12 @@ export default function SignInForm() {
       [name]: value,
     });
   };
-
+  // handles box tick  function not yet functional 
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Ensure passwords match before dispatching
@@ -45,20 +47,31 @@ export default function SignInForm() {
       return;
     }
 
-    // Dispatch signUpUser thunk action
-    dispatch(signUpUser({
-      name: formValues.name,
-      email: formValues.email,
-      password: formValues.password,
-    })).unwrap()
-      .then(() => {
-        // Navigate to the login page on successful registration
-        navigate('/LoginPage');
-      })
-      .catch((error) => {
-        // Handle error (optional)
-        console.error('Registration error:', error);
+    try {
+      // Dispatch signUpUser thunk action
+      const userCredential = await dispatch(signUpUser({
+        name: formValues.name,
+        email: formValues.email,
+        password: formValues.password,
+      })).unwrap();
+
+      const { user } = userCredential; // Assuming signUpUser returns userCredential
+
+      // Store user details in Firestore with automatic ID
+      await addDoc(collection(db, 'users'), {
+        name: formValues.name,
+        surname: formValues.surname,
+        email: formValues.email,
+        password: formValues.password, // Optional: Avoid storing plaintext passwords in production
+        profileImage: profileImage || '', // Store profile image URL if available
       });
+
+      // Navigate to the login page on successful registration
+      navigate('/LoginPage');
+    } catch (error) {
+      // Handle error (optional)
+      console.error('Registration error:', error);
+    }
   };
 
   const handleGoogleSignIn = () => {
