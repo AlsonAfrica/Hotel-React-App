@@ -1,71 +1,86 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { closePopup } from '../Redux/popupformSlice';
-import './styles/popUpform.css';
-import BankingForm from './bankingform';
-import { Grid, Box, Typography, Button } from '@mui/material';
+import "../Components/styles/homepage.css";
 
-const Popup = () => {
-  const { isVisible, cardData } = useSelector((state) => state.popup);
-  const dispatch = useDispatch();
+const RoomPopup = () => {
+    const dispatch = useDispatch();
+    const { isOpen, roomDetails } = useSelector((state) => state.popup);
 
-  if (!isVisible || !cardData) return null;
+    // Local state for the check-in, check-out dates, and number of people
+    const [checkInDate, setCheckInDate] = useState('');
+    const [checkOutDate, setCheckOutDate] = useState('');
+    const [numOfPeople, setNumOfPeople] = useState(1);
 
-  return (
-    <div className="popup-overlay" onClick={() => dispatch(closePopup())}>
-      <div className="popup-content" onClick={(e) => e.stopPropagation()} style={{ position: 'relative' }}>
-        {/* Close Button */}
-        <Box className="close-button-container" sx={{ position: 'absolute', top: 10, right: 10 }}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => dispatch(closePopup())}
-          >
-            Close
-          </Button>
-        </Box>
+    const handleClose = () => {
+        dispatch(closePopup());
+    };
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Typography variant="h4" gutterBottom>
-                {cardData.title}
-              </Typography>
-              <Box className='dates'>
-                <input type="date" />
-                <input type="date" />
-              </Box>
-              <Box className="image-grid-container">
-                {cardData.images ? cardData.images.map((image, index) => (
-                  <img key={index} src={image} alt={`Popup Image ${index + 1}`} className="grid-image" />
-                )) : <p>No images available</p>}
-              </Box>
-              <Typography variant="body1">Room Type: {cardData.roomType}</Typography>
-              <Typography variant="body1">Price: {cardData.price}</Typography>
-              <Typography variant="body1">{cardData.notes}</Typography>
-              <Box className="card-rating">
-                {"★".repeat(cardData.starRating)}{"☆".repeat(5 - cardData.starRating)}
-              </Box>
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // You can handle the form submission here (e.g., send data to server)
+        console.log({
+            checkInDate,
+            checkOutDate,
+            numOfPeople,
+            roomDetails
+        });
+    };
 
-              <Box className="popup-amenities">
-                {cardData.amenities ? cardData.amenities.map((amenity, index) => (
-                  <Box key={index} className="popup-amenity">
-                    {amenity.icon} <span>{amenity.label}</span>
-                  </Box>
-                )) : <p>No amenities listed</p>}
-              </Box>
-            </Box>
-          </Grid>
+    return (
+        <div className={`popup ${isOpen ? 'open' : ''}`}>
+            {roomDetails && (
+                <div className="popup-content">
+                    <h2>{roomDetails.roomType}</h2>
+                    <p><strong>Capacity:</strong> {roomDetails.capacity}</p>
+                    <p><strong>Amenities:</strong> {roomDetails.amenities.join(', ')}</p>
+                    <p><strong>Price:</strong> R{roomDetails.price.toFixed(2)}</p>
+                    <p><strong>Availability:</strong> {roomDetails.availability ? 'Available' : 'Not Available'}</p>
 
-          <Grid item xs={12} md={6}>
-            <BankingForm />
-          </Grid>
-        </Grid>
-      </div>
-    </div>
-  );
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="checkin">Check-in Date:</label>
+                            <input
+                                type="date"
+                                id="checkin"
+                                value={checkInDate}
+                                onChange={(e) => setCheckInDate(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="checkout">Check-out Date:</label>
+                            <input
+                                type="date"
+                                id="checkout"
+                                value={checkOutDate}
+                                onChange={(e) => setCheckOutDate(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="people">Number of People:</label>
+                            <select
+                                id="people"
+                                value={numOfPeople}
+                                onChange={(e) => setNumOfPeople(e.target.value)}
+                            >
+                                {[...Array(roomDetails.capacity).keys()].map((num) => (
+                                    <option key={num + 1} value={num + 1}>
+                                        {num + 1}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <button type="submit" className="submit-btn">Book Now</button>
+                        <button type="button" className="close-btn" onClick={handleClose}>Close</button>
+                    </form>
+                </div>
+            )}
+        </div>
+    );
 };
 
-export default Popup;
+export default RoomPopup;
 
 

@@ -1,21 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+    isOpen: false,
+    roomDetails: null,
+};
+
 const popupSlice = createSlice({
-  name: 'popup',
-  initialState: {
-    isVisible: false,
-    cardData: null, // Initialize with null or an empty object if needed
-  },
-  reducers: {
-    openPopup: (state, action) => {
-      state.isVisible = true;
-      state.cardData = action.payload; // Store the card data
+    name: 'popup',
+    initialState,
+    reducers: {
+        openPopup: (state, action) => {
+            state.isOpen = true;
+            state.roomDetails = action.payload;
+        },
+        closePopup: (state) => {
+            state.isOpen = false;
+            state.roomDetails = null;
+        },
     },
-    closePopup: (state) => {
-      state.isVisible = false;
-      state.cardData = null; // Clear the card data
-    },
-  },
 });
 
 export const { openPopup, closePopup } = popupSlice.actions;

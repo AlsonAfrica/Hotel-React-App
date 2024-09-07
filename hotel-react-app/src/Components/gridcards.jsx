@@ -1,248 +1,77 @@
-import React from 'react';
-import { FaHeart } from "react-icons/fa";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { MdIosShare } from "react-icons/md";
+import React, { useState } from "react";
+import { Card, CardContent, CardMedia, Typography, Grid, Button, CardActions, IconButton } from "@mui/material";
 import { useDispatch } from 'react-redux';
-import { openPopup } from '../Redux/popupformSlice';
-import Popup from './popUpField';
-import { CiWifiOn } from "react-icons/ci";
-import { MdLocationCity } from "react-icons/md";
-import { MdDinnerDining } from "react-icons/md";
+import { openPopup } from "../Redux/popupformSlice";
+import { Favorite, Share } from "@mui/icons-material"; // Using icons for Like and Share
 
+const RoomCard = ({ room }) => {
+    const dispatch = useDispatch();
+    const [likeCount, setLikeCount] = useState(0); // State for like count
 
-// Sample data for the cards
-const cardData = [
-  {
-    id: 1,
-    title: "Deluxe Room",
-    imageUrl: "https://via.placeholder.com/300x200", // Placeholder image
-    roomType: "Deluxe",
-    price: "$120 per night",
-    notes: "Includes free breakfast and Wi-Fi.",
-    starRating: 4,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 2,
-    title: "Standard Room",
-    imageUrl: "https://via.placeholder.com/300x200", // Placeholder image
-    roomType: "Standard",
-    price: "$90 per night",
-    notes: "Comfortable stay with all basic amenities.",
-    starRating: 3,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 3,
-    title: "Suite",
-    imageUrl: "https://via.placeholder.com/300x200", // Placeholder image
-    roomType: "Suite",
-    price: "$200 per night",
-    notes: "Luxurious suite with a city view.",
-    starRating: 5,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
+    const handleViewClick = () => {
+        dispatch(openPopup(room)); // Dispatch the action with room details
+    };
 
-  {
-    id: 4,
-    title: "Superior Room",
-    imageUrl: "https://via.placeholder.com/300x200",
-    roomType: "Superior",
-    price: "$150 per night",
-    notes: "Spacious room with a beautiful view.",
-    starRating: 4,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 5,
-    title: "Family Room",
-    imageUrl: "https://via.placeholder.com/300x200",
-    roomType: "Family",
-    price: "$180 per night",
-    notes: "Ideal for families with children.",
-    starRating: 4,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 6,
-    title: "Single Room",
-    imageUrl: "https://via.placeholder.com/300x200",
-    roomType: "Single",
-    price: "$70 per night",
-    notes: "Perfect for solo travelers.",
-    starRating: 3,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 7,
-    title: "Double Room",
-    imageUrl: "https://via.placeholder.com/300x200",
-    roomType: "Double",
-    price: "$100 per night",
-    notes: "Suitable for couples or friends.",
-    starRating: 4,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 8,
-    title: "Penthouse",
-    imageUrl: "https://via.placeholder.com/300x200",
-    roomType: "Penthouse",
-    price: "$300 per night",
-    notes: "Ultimate luxury with panoramic views.",
-    starRating: 5,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-  {
-    id: 9,
-    title: "Budget Room",
-    imageUrl: "https://via.placeholder.com/300x200",
-    roomType: "Budget",
-    price: "$50 per night",
-    notes: "Affordable option for budget travelers.",
-    starRating: 2,
-    images: [
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-      "https://via.placeholder.com/100x100",
-    ],
-    amenities: [
-      { icon: <MdDinnerDining />, label: "Free Breakfast" },
-      { icon: <CiWifiOn />, label: "Free Wi-Fi" },
-      { icon:<MdLocationCity />, label: "City View" },
-    ]
-  },
-];
-const GridCards = () => {
-  const dispatch = useDispatch();
+    const handleLikeClick = () => {
+        setLikeCount(likeCount + 1); // Increment the like count
+    };
 
-  const handleOpenPopup = (card) => {
-    dispatch(openPopup(card)); // Pass the card data to the popup
-  };
+    const handleShareClick = () => {
+        // Simple share logic (could be extended)
+        const shareData = {
+            title: room.roomType,
+            text: `Check out this ${room.roomType} room with ${room.amenities.join(', ')} amenities!`,
+            url: window.location.href, // Current page URL
+        };
 
-  return (
-    <div className="grid-container">
-      {cardData.map((card) => (
-        <div key={card.id} className="card">
-          <img src={card.imageUrl} alt={card.title} className="card-image" />
-          <h3>{card.title}</h3>
-          <p>Room Type: {card.roomType}</p>
-          <p>Price: {card.price}</p>
-          <p>{card.notes}</p>
-          <div className="card-rating">
-            {"★".repeat(card.starRating)}{"☆".repeat(5 - card.starRating)}
-          </div>
-          <div className="card-actions">
-            <button className="view-button" title="view" onClick={() => handleOpenPopup(card)}>
-              <MdOutlineRemoveRedEye />
-            </button>
-            <button className="like-button" title="like"><FaHeart /></button>
-            <button className="share-button" title="share"><MdIosShare /></button>
-          </div>
-        </div>
-      ))}
-      <Popup />
-    </div>
-  );
+        if (navigator.share) {
+            navigator.share(shareData).catch((error) => console.error('Error sharing:', error));
+        } else {
+            alert('Your browser does not support Web Share API.'); // Fallback for non-supporting browsers
+        }
+    };
+
+    return (
+        <Grid item xs={12} sm={6} md={4}>
+            <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={room.image}
+                    alt={room.roomType}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {room.roomType}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        <strong>Capacity:</strong> {room.capacity}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        <strong>Amenities:</strong> {room.amenities.join(', ')}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        <strong>Price:</strong> R{room.price.toFixed(2)}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        <strong>Availability:</strong> {room.availability ? 'Available' : 'Not Available'}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" color="primary" onClick={handleViewClick}>
+                        View
+                    </Button>
+                    <IconButton size="small" color="secondary" onClick={handleLikeClick}>
+                        <Favorite /> {likeCount}
+                    </IconButton>
+                    <IconButton size="small" color="primary" onClick={handleShareClick}>
+                        <Share />
+                    </IconButton>
+                </CardActions>
+            </Card>
+        </Grid>
+    );
 };
 
-export default GridCards;
+export default RoomCard;
+
