@@ -4,6 +4,7 @@ import DrawerSlice from './DrawerSlice';
 import UserSlice from './userSlice';
 import authenticationSlice from './authenticationSlice';
 import popupformSlice from './popupformSlice';
+import favouriteSlice from './favouritesSlice';
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   user: UserSlice,
   auth: authenticationSlice,
   popup: popupformSlice,
+  favourite:favouriteSlice
 });
 
 // Configure the store using the rootReducer
