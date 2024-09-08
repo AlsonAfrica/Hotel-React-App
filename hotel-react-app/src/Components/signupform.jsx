@@ -8,6 +8,7 @@ import { signUpUser } from '../Redux/authenticationSlice';
 import { collection, addDoc } from 'firebase/firestore';
 import { auth, db } from '../Config/firebaseConfig'; // Import Firestore
 
+
 // Initializing the form fields
 export default function SignInForm() {
   const [formValues, setFormValues] = React.useState({
