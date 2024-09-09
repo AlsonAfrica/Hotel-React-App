@@ -13,12 +13,14 @@ import { Grid, Container, Typography } from "@mui/material";
 
 const HomePage = () => {
     const [rooms, setRooms] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
 
     useEffect(() => {
         const fetchRooms = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, 'rooms'));
                 const roomsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                console.log('Fetched rooms:', roomsList); // Log fetched rooms
                 setRooms(roomsList);
             } catch (err) {
                 console.error('Error fetching rooms:', err);
@@ -27,6 +29,11 @@ const HomePage = () => {
 
         fetchRooms();
     }, []);
+
+    // Filter rooms based on the roomType and search query
+    const filteredRooms = rooms.filter(room => 
+        room.roomType && room.roomType.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className="homepage-wrapper">
@@ -45,7 +52,10 @@ const HomePage = () => {
                 <DrawerComponent />
             </div>
             <div className="searchbar">
-                <SearchBar />
+                <SearchBar 
+                    value={searchQuery}  // Pass search query value
+                    onChange={(e) => setSearchQuery(e.target.value)}  // Update search query state on change
+                />
             </div>
 
             {/* Room Catalogues */}
@@ -56,8 +66,8 @@ const HomePage = () => {
             </div>
             <Container>
                 <Grid container spacing={3}>
-                    {rooms.length > 0 ? (
-                        rooms.map(room => (
+                    {filteredRooms.length > 0 ? (
+                        filteredRooms.map(room => (
                             <RoomCard key={room.id} room={room} />
                         ))
                     ) : (

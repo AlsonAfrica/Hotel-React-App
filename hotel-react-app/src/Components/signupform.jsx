@@ -6,7 +6,7 @@ import { Google as GoogleIcon } from '@mui/icons-material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { signUpUser } from '../Redux/authenticationSlice';
 import { collection, addDoc } from 'firebase/firestore';
-import { auth, db } from '../Config/firebaseConfig'; // Import Firestore
+import { auth, db } from '../Config/firebaseconfig';
 
 
 // Initializing the form fields
